@@ -1,0 +1,73 @@
+{
+
+    "engines": {
+
+        "node": "22.18.0"
+
+    },
+
+    "name": "majorproject",
+
+    "version": "1.0.0",
+
+    "description": "",
+
+    "main": "index.js",
+
+    "scripts": {
+
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "upload-images": "node ../seed/uploadImages.js",
+        "reset": "node ../seed/reset.js",
+        "seed": "node ../seed/seed.js"
+
+    },
+
+    "author": "Madanraj",
+
+    "license": "ISC",
+
+    "dependencies": {
+
+        "bcrypt": "^6.0.0",
+
+        "cloudinary": "^1.41.3",
+
+        "cookie-parser": "^1.4.7",
+
+        "cors": "^2.8.6",
+
+        "dotenv": "^17.2.3",
+
+        "ejs": "^3.1.10",
+
+        "ejs-mate": "^4.0.0",
+
+        "express": "^5.2.1",
+
+        "google-auth-library": "^10.9.0",
+
+        "joi": "^18.0.2",
+
+        "jsonwebtoken": "^9.0.3",
+
+        "method-override": "^3.0.0",
+
+        "mongoose": "^9.0.1",
+
+        "multer": "^2.0.2",
+
+        "multer-storage-cloudinary": "^4.0.0",
+
+        "nodemailer": "^9.0.3",
+
+        "nodemon": "^3.1.14",
+
+        "razorpay": "^2.9.6",
+
+        "socket.io": "^4.8.3"
+
+    }
+
+}
+

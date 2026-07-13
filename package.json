@@ -1,0 +1,10 @@
+{
+  "name": "travelnest-root",
+  "version": "1.0.0",
+  "description": "TravelNest Root Workspace Package",
+  "scripts": {
+    "upload-images": "npm run --prefix backend upload-images",
+    "reset": "npm run --prefix backend reset",
+    "seed": "npm run --prefix backend seed"
+  }
+}
