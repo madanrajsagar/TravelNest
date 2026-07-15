@@ -55,6 +55,7 @@ router.post(
       return res.json({
         success: true,
         message: "Welcome to TravelNest (Simulated Google Login)!",
+        token,
         user: { _id: user._id, username: user.username, email: user.email, avatar: user.avatar }
       });
     }
@@ -113,6 +114,7 @@ router.post(
       res.json({
         success: true,
         message: "Welcome to TravelNest!",
+        token,
         user: { _id: user._id, username: user.username, email: user.email, avatar: user.avatar }
       });
 

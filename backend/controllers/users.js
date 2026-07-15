@@ -58,6 +58,7 @@ module.exports.signup = async (req, res, next) => {
     res.json({
       success: true,
       message: "Welcome to TravelNest!",
+      token,
       user: { _id: newUser._id, username: newUser.username, email: newUser.email, role: newUser.role }
     });
   } catch (e) {
@@ -109,6 +110,7 @@ module.exports.login = async (req, res) => {
     res.json({
       success: true,
       message: "Welcome back to TravelNest!",
+      token,
       user: { _id: user._id, username: user.username, email: user.email, role: user.role }
     });
   } catch (e) {
@@ -131,12 +133,21 @@ module.exports.logout = (req, res) => {
 module.exports.currUser = async (req, res) => {
   console.log("\n--- CURRENT USER SESSION REQUEST ---");
   try {
-    const token = req.cookies.token;
+    let token = req.cookies.token;
+    if (!token && req.headers.authorization) {
+      const parts = req.headers.authorization.split(" ");
+      if (parts.length === 2 && parts[0] === "Bearer") {
+        token = parts[1];
+      } else {
+        token = req.headers.authorization;
+      }
+    }
+    
     if (!token) {
-      console.log("No token cookie found");
+      console.log("No token cookie or Authorization header found");
       return res.json({ user: null });
     }
-    console.log("Verifying token cookie...");
+    console.log("Verifying token...");
     const secret = process.env.JWT_SECRET || process.env.SECRET || "fallbacksecret";
     const decoded = jwt.verify(token, secret);
     

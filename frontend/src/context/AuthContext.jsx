@@ -6,6 +6,18 @@ import { toast } from 'react-toastify';
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://13.127.90.67:8080';
 
+// Add request interceptor to dynamically inject the authorization header
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -35,11 +47,13 @@ export const AuthProvider = ({ children }) => {
       } else {
         setCurrUser(null);
         setWishlist([]);
+        localStorage.removeItem('token');
       }
     } catch (err) {
       console.error('Failed to fetch user session:', err);
       setCurrUser(null);
       setWishlist([]);
+      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
@@ -62,6 +76,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('/api/login', { username, password });
       if (response.data && response.data.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         setCurrUser(response.data.user);
         return { success: true, message: response.data.message };
       }
@@ -76,6 +93,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('/api/signup', { username, email, password });
       if (response.data && response.data.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         setCurrUser(response.data.user);
         return { success: true, message: response.data.message };
       }
@@ -90,6 +110,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post('/api/auth/google', { credential });
       if (response.data && response.data.success) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         setCurrUser(response.data.user);
         return { success: true, message: response.data.message };
       }
@@ -104,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.get('/api/logout');
       if (response.data && response.data.success) {
+        localStorage.removeItem('token');
         setCurrUser(null);
         setWishlist([]);
         return { success: true, message: response.data.message };
@@ -111,6 +135,7 @@ export const AuthProvider = ({ children }) => {
       return { success: false, error: 'Logout failed' };
     } catch (err) {
       console.error('Logout error:', err);
+      localStorage.removeItem('token');
       setCurrUser(null);
       setWishlist([]);
       return { success: true, message: 'Logged out locally' };

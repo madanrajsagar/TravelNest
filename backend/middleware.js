@@ -9,9 +9,18 @@ const User = require("./models/user");
 module.exports.isLoggedIn = async (req, res, next) => {
   console.log("\n--- MIDDLEWARE CHECK: isLoggedIn ---");
   try {
-    const token = req.cookies.token;
+    let token = req.cookies.token;
+    if (!token && req.headers.authorization) {
+      const parts = req.headers.authorization.split(" ");
+      if (parts.length === 2 && parts[0] === "Bearer") {
+        token = parts[1];
+      } else {
+        token = req.headers.authorization;
+      }
+    }
+    
     if (!token) {
-      console.warn("isLoggedIn check: Token cookie is missing");
+      console.warn("isLoggedIn check: Token cookie or Authorization header is missing");
       return res.status(401).json({ success: false, error: "You must be logged in!" });
     }
 
