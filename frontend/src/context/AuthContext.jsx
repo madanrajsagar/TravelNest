@@ -4,7 +4,9 @@ import { toast } from 'react-toastify';
 
 // Set global axios config to send credentials (cookies) on every request
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://13.127.90.67:8080';
+axios.defaults.baseURL = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+  ? 'http://localhost:8080'
+  : 'http://13.127.90.67:8080';
 
 // Add request interceptor to dynamically inject the authorization header
 axios.interceptors.request.use(

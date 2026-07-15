@@ -80,7 +80,9 @@ export const ChatWindow = () => {
       
       // Initialize Socket connection
       if (!socketRef.current) {
-        const socketUrl = 'http://13.127.90.67:8080';
+        const socketUrl = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+          ? 'http://localhost:8080'
+          : 'http://13.127.90.67:8080';
 
         socketRef.current = io(socketUrl);
       }
