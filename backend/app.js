@@ -1,6 +1,6 @@
 
-if(process.env.NODE_ENV !== "production"){
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 
 }
 
@@ -93,6 +93,11 @@ app.use("/api/admin", adminRouter);
 app.use("/api/reports", reportRouter);
 app.use("/api/ai/search", aiSearchRouter);
 app.use("/api/services/hosts", superHostRouter);
+
+// Root Endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to TravelNest API!", status: "active" });
+});
 
 // 404 handler
 app.use((req, res, next) => {
