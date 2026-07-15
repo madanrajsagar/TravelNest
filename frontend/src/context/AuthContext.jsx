@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 // Set global axios config to send credentials (cookies) on every request
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://13.127.90.67';
+axios.defaults.baseURL = 'http://13.127.90.67:8080';
 
 const AuthContext = createContext(null);
 

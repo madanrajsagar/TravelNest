@@ -109,9 +109,7 @@ export const Navbar = ({ onSearch }) => {
 
   React.useEffect(() => {
     if (currUser && currUser.role === 'admin') {
-      const socketUrl = import.meta.env.VITE_API_URL || (window.location.origin.includes('localhost') 
-        ? 'http://localhost:8080' 
-        : window.location.origin);
+      const socketUrl = 'http://13.127.90.67:8080';
 
       if (!socketRef.current) {
         import('socket.io-client').then(({ io }) => {

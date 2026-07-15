@@ -80,9 +80,7 @@ export const ChatWindow = () => {
       
       // Initialize Socket connection
       if (!socketRef.current) {
-        const socketUrl = import.meta.env.VITE_API_URL || (window.location.origin.includes('localhost') 
-          ? 'http://localhost:8080' 
-          : window.location.origin);
+        const socketUrl = 'http://13.127.90.67:8080';
 
         socketRef.current = io(socketUrl);
       }
